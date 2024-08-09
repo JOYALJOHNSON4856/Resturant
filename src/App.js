@@ -1,23 +1,30 @@
 import logo from './logo.svg';
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import MainLayout from './Layouts/MainLayout';
+import Home from './Pages/home/Home';
+import LoginPage from './Pages/LoginPage/LoginPage';
+import EnhancedTable from './Pages/Users/User';
+import { useContext } from 'react';
+import { tokenauthcontext } from './context/TokenAuth';
+import Plain from './Components/plainpage/Plain';
 
 function App() {
+  const {isAuth,setisAuth}=useContext(tokenauthcontext)
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='mainpage'>
+     <Routes>
+      <Route path='home' element={isAuth?<MainLayout/>:<Plain/>} >
+
+      <Route index element={<Home />} />    
+      <Route path='user' element={<EnhancedTable/>} />          
+       </Route>
+       <Route path='/' element={<LoginPage/>} >
+      
+       </Route>
+
+     </Routes>
     </div>
   );
 }
